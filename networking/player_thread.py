@@ -9,6 +9,11 @@ class PlayerThread(Thread):
 		self.socket = socket
 		self.player = player
 
+	def getPlayer(self):
+		return self.player
+
 	#overridden method
 	def run(self):
 		pass
+		#while True:
+			#print "Listening for client_id : " + str(self.player.getId())

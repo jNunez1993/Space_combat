@@ -2,8 +2,7 @@ from interface import Serializable
 
 class Map(Serializable):
 
-	def __init__(self,players):
-		self.players = players
+	def __init__(self):
 		self.projectiles = []
 		self.xBound = 640
 		self.yBound = 480
