@@ -2,6 +2,7 @@ import json
 import socket
 import config
 from networking import PlayerThread
+from factory import PlayerFactory
 
 class Server:
 	def __init__(self):
@@ -22,6 +23,10 @@ class Server:
 			print "Player connected from " + str(client_addr)
 			if len(self.playerSockets) == 2:
 				break
+		players = PlayerFactory.construct()
+		for i,player in enumerate(players):
+			pthread = PlayerThread(self.playerSockets[i],player)
+			self.playerThreads.append(pthread)
 		
 		#self.allPlayersConnected()
 

@@ -5,7 +5,9 @@ from threading import Thread
 #which is something that will
 class PlayerThread(Thread):
 	def __init__(self,socket,player):
-		pass
+		Thread.__init__(self)
+		self.socket = socket
+		self.player = player
 
 	#overridden method
 	def run(self):
