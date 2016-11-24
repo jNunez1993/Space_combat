@@ -19,3 +19,9 @@ class Client:
 		if data["msg"] == "All players have connected":
 			return True
 		return False
+
+	
+		
+
+
+
