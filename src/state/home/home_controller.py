@@ -1,7 +1,8 @@
 from home_view import HomeView
 from utility import Button
+from state import WaitingState 
 import pygame
-
+import sys
 
 class HomeController:
 
@@ -39,7 +40,7 @@ class HomeController:
 
 
 	def toWaitingState(self):
-		print "Waiting state"
+		self.stateMachine.push(WaitingState(self.stateMachine))
 
 	def quitGame(self):
-		print "Quitting game"
+		sys.exit(0)
