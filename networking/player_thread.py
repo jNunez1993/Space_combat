@@ -1,5 +1,6 @@
 from threading import Thread
 import json
+from utilities import LocationMapper as locationMapper
 
 #Responsible for receiving player information and updating its player
 #All of these players will be fed to the map object
@@ -19,10 +20,11 @@ class PlayerThread(Thread):
 	def run(self):
 		print "Checking for key pressed"
 		while True:
-			print "waiting for key"
 			data = self.socket.recv(1024)
 			data = json.loads(data)
 			keyPressed = data["keyPressed"]
-			print "key received:" + str(keyPressed)
+			for key in keyPressed:
+				displacement = locationMapper.directionToDisplacement(key)
+				self.player.move(displacement["x"],displacement["y"])
 			msg = {"msg" : "kpACK"}
 			self.socket.sendall(json.dumps(msg))

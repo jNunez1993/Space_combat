@@ -14,6 +14,7 @@ class Server:
 
 	def start(self):
 		self.serverSocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+		self.serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		self.serverSocket.bind(config.server_address)
 		self.serverSocket.listen(config.MAX_CONNECTIONS)
 		self.waitForPlayers() 
