@@ -5,4 +5,5 @@ class PlayView:
 		pass
 
 	def render(self):
-		print "Rendering play view"
+		pass
+		#print "Rendering play view"
