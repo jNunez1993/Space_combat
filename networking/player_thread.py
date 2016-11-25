@@ -13,6 +13,9 @@ class PlayerThread(Thread):
 	def getPlayer(self):
 		return self.player
 
+	def getSocket(self):
+		return self.socket
+
 	#overridden method
 	#will listen for key pressed and update the player as needed
 	#Would be good if it can inform the map broadcaster that a change has occured

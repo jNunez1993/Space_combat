@@ -1,4 +1,4 @@
-
+import json
 
 class MapBroadcaster:
 	def __init__(self,gameMap, playerThreads):
@@ -11,4 +11,11 @@ class MapBroadcaster:
 		while True:
 			for thread in self.playerThreads:
 				if thread.didPlayerMove():
-					print self.gameMap.serialize()
+					mapData = self.gameMap.serialize()
+					msg = "map data"
+					blob = {
+						"msg" : msg,
+						"map" : mapData
+					}
+					socket = thread.getSocket()
+					socket.sendall(json.dumps(blob))
