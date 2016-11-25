@@ -1,13 +1,18 @@
 import pygame
+from map_view import MapView
 
 class PlayView:
 	def __init__(self):
 		self.window = pygame.display.get_surface()
-		self.starship = pygame.image.load("../img/ship1_north.png")
+		self.mapView = MapView(self.window)
 		
 
 	def render(self):
 		self.window.fill((0,0,0))
-		self.window.blit(self.starship, self.starship.get_rect())
+		self.mapView.render()
 		pygame.display.flip()
+
+
+	def setMap(self,gameMap):
+		self.mapView.setMap(gameMap)
 		

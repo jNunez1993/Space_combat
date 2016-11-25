@@ -14,4 +14,6 @@ class PlayController:
 		key = self.keyEvent.getKeyPressed()
 		if key != None:
 			self.client.sendKeyPressed(key)
+		if self.client.isMapDataReady():
+			self.view.setMap(self.client.getMapData())
 		self.view.render()

@@ -44,7 +44,8 @@ class Client:
 				data = self.queue.pop(0)
 				if data["msg"] == "map data":
 					self.mapReady = True
-					self.mapData = data
+					self.mapData = data["map"]
+					self.socket.sendall({"msg" : "mapACK"}
 				elif data["msg"] == "kpACK":
 					while self.keyPressLock:
 						continue
