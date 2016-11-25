@@ -8,7 +8,7 @@ class MapBroadcaster:
 
 
 	def broadcast(self):
-		pass
-		# while True:
-		# 	for thread in self.playerThreads:
-		# 		print "Sending map information to player: " + str(thread.getPlayer().getId())
+		while True:
+			for thread in self.playerThreads:
+				if thread.didPlayerMove():
+					print self.gameMap.serialize()

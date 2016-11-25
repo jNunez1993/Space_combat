@@ -35,8 +35,10 @@ class Map(Serializable):
 
 	def serialize(self):
 		serialized = {}
-		serialized["players"] = self.players
-		serialized["projectiles"] = self.projectiles
+		players = [player.serialize() for player in self.players]
+		projectiles = [projectile.serialize() for projectile in self.projectiles]
+		serialized["players"] = players
+		serialized["projectiles"] = projectiles
 		return serialized
 
 

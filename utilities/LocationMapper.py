@@ -1,23 +1,34 @@
 
+directionMapping = {
+	"w" : "north",
+	"a" : "west",
+	"s" : "south",
+	"d" : "east",
+	"wd" : "northeast",
+	"dw" : "northeast",
+	"wa" : "northwest",
+	"aw" : "northwest",
+	"sd" : "southeast",
+	"ds" : "southeast",
+	"sa" : "southwest",
+	"as" : "southwest"
+}
+
+directions = {}
+directions["north"] = (0,-1)
+directions["south"] = (0,1)
+directions["east"] = (1,0)
+directions["west"] = (-1,0)
+directions["northeast"] = (1,-1)
+directions["northwest"] = (-1,-1)
+directions["southeast"] = (1,1)
+directions["southwest"] = (-1,1)
 
 
-def directionToDisplacement(direction):
-	displacement = {}
-	if direction == "w" or direction=="North":
-		displacement["x"] = 0
-		displacement["y"] = -1
+def toLongDirection(keys):
+	if keys in directionMapping:
+		return directionMapping[keys]
+	return "north"
 
-	elif direction == "a" or direction=="West":
-		displacement["x"] = -1
-		displacement["y"] = 0
-
-	elif direction == "s" or direction=="South":
-		displacement["x"] = 0
-		displacement["y"] = 1
-
-	elif direction == "d" or direction=="East":
-		displacement["x"] = 1
-		displacement["y"] = 0
-
-	return displacement
-
+def displacementFromDirection(direction):
+	return directions[direction]

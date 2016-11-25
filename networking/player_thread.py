@@ -3,13 +3,12 @@ import json
 from utilities import LocationMapper as locationMapper
 
 #Responsible for receiving player information and updating its player
-#All of these players will be fed to the map object
-#which is something that will
 class PlayerThread(Thread):
 	def __init__(self,socket,player):
 		Thread.__init__(self)
 		self.socket = socket
 		self.player = player
+		self.didMove = False
 
 	def getPlayer(self):
 		return self.player
@@ -22,9 +21,16 @@ class PlayerThread(Thread):
 		while True:
 			data = self.socket.recv(1024)
 			data = json.loads(data)
-			keyPressed = data["keyPressed"]
-			for key in keyPressed:
-				displacement = locationMapper.directionToDisplacement(key)
-				self.player.move(displacement["x"],displacement["y"])
+			keysPressed = data["keyPressed"]
+			direction = locationMapper.toLongDirection(keysPressed)
+			displacement = locationMapper.displacementFromDirection(direction)
+			self.player.move(displacement[0],displacement[1])
+			self.player.setDirection(direction)
 			msg = {"msg" : "kpACK"}
 			self.socket.sendall(json.dumps(msg))
+			self.didMove = True
+
+	def didPlayerMove(self):
+		if self.didMove:
+			self.didMove = False
+			return True
