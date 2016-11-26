@@ -15,4 +15,5 @@ class PlayView:
 
 	def setMap(self,gameMap):
 		self.mapView.setMap(gameMap)
+
 		

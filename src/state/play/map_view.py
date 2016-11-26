@@ -1,5 +1,6 @@
 from utility import ImageHelper
 import pygame
+import time
 
 
 class MapView:
@@ -12,10 +13,16 @@ class MapView:
 		self.gameMap = None
 		self.players = []
 		self.projectiles = []
+		self.starry = 1
+		self.lastStarry = None
+		self.lastStarryTime = 0
 
 
 
 	def render(self):
+		starry = self.getStarry()
+		self.window.blit(starry,(0,0))
+
 		img = None
 		for player in self.players:
 			img = self.getPlayerRepresentation(player)
@@ -55,6 +62,19 @@ class MapView:
 		self.players = self.gameMap['players']
 		self.projectiles = self.gameMap['projectiles']
 
+	def getStarry(self):
+		if self.lastStarry == None:
+			img = pygame.image.load("../img/starry1.jpg")
+			self.lastStarry = img
+			return img
+		currTime = time.time()
+		if currTime - self.lastStarryTime > .15:
+			img = pygame.image.load("../img/starry" + str(self.starry) + ".jpg")
+			self.starry = self.starry%3 + 1
+			self.lastStarry = img
+			self.lastStarryTime = currTime
+			return img
+		return self.lastStarry
 
 	def bulletDisplacement(self, direction,rect):
 		width = rect.width
