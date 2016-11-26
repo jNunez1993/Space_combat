@@ -42,7 +42,6 @@ class MapView:
 			if projectile["id"] == 2:
 				pygame.draw.circle(self.window,(0,255,0),(x+dis[0],y+dis[1]),3)
 
-		pygame.display.flip()
 
 
 
