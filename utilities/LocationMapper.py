@@ -28,7 +28,8 @@ directions["southwest"] = (-1,1)
 def toLongDirection(keys):
 	if keys in directionMapping:
 		return directionMapping[keys]
-	return None
+	else:
+		return directionMapping[keys[0]] #guards against invalid key presses like 'a' and 'd'
 
 def displacementFromDirection(direction):
 	return directions[direction]
