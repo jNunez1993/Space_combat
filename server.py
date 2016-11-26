@@ -5,6 +5,7 @@ from networking import PlayerThread
 from networking import MapBroadcaster
 from factory import PlayerFactory
 from factory import MapFactory
+import time
 
 class Server:
 	def __init__(self):
@@ -45,10 +46,12 @@ class Server:
 			thread.start()
 		self.mapBroadcaster = MapBroadcaster(gameMap,self.playerThreads)
 
+
 	def allPlayersConnected(self):
 		for player in self.playerSockets:
 			msg = {"msg" : "All players have connected"}
 			player.sendall(json.dumps(msg))
+			time.sleep(.2)
 
 
 

@@ -30,7 +30,7 @@ class Player(Serializable):
 		return projectile
 
 	def move(self,x,y):
-		self.location.displace(x,y)
+		self.location.displace(x*3,y*3)
 
 	def getLocation(self):
 		return self.location
