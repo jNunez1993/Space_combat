@@ -1,10 +1,12 @@
 import json
 import time
+from model import MapManager
 
 class MapBroadcaster:
 	def __init__(self,gameMap, playerThreads):
 		self.gameMap = gameMap
 		self.playerThreads = playerThreads
+		self.mapManager = MapManager(self.gameMap)
 		self.broadcast()
 
 
@@ -13,6 +15,10 @@ class MapBroadcaster:
 			for thread in self.playerThreads:
 				while not thread.didReceiveMapACK():
 						continue
+				
+				projectiles = thread.getProjectiles()
+				self.mapManager.handleProjectiles(projectiles)
+
 				mapData = self.gameMap.serialize()
 				msg = "map data"
 				blob = {
@@ -24,6 +30,7 @@ class MapBroadcaster:
 					continue
 				thread.setSendLock(True)
 				socket.sendall(json.dumps(blob))
-				time.sleep(.005)
+				time.sleep(.008)
 				thread.setSendLock(False)
+
 

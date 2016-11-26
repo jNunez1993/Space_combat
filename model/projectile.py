@@ -1,6 +1,7 @@
 from .location import Location
 from .direction import Direction
 from interface import Serializable
+from utilities import LocationMapper as locationMapper
 
 class Projectile(Serializable):
 
@@ -8,7 +9,7 @@ class Projectile(Serializable):
 		self.location = location
 		self.direction = direction
 		self.id = id_
-		self.speed = 5
+		self.speed = 8
 
 	def getLocation(self):
 		return self.location
@@ -20,7 +21,7 @@ class Projectile(Serializable):
 			self.location.setLocation(x,y)
 
 	def updateLocation(self):
-		displacementValues = self.direction.getDisplacement()
+		displacementValues = locationMapper.displacementFromDirection(self.direction.getDirectionString())
 		x = displacementValues[0]
 		y = displacementValues[1]
 		self.location.displace(x*self.speed,y*self.speed)

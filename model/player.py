@@ -15,12 +15,14 @@ class Player(Serializable):
 		if direction:
 			self.direction = Direction(direction)
 		else:
-			self.direction = Direction("East")
+			self.direction = Direction("east")
 
 		if hp:
 			self.hp = hp
 		else:
 			self.hp = 100
+
+		self.speed = 5
 
 	def getId(self):
 		return self.id
@@ -30,7 +32,7 @@ class Player(Serializable):
 		return projectile
 
 	def move(self,x,y):
-		self.location.displace(x*3,y*3)
+		self.location.displace(x*self.speed,y*self.speed)
 
 	def getLocation(self):
 		return self.location

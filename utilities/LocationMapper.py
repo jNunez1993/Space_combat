@@ -28,7 +28,7 @@ directions["southwest"] = (-1,1)
 def toLongDirection(keys):
 	if keys in directionMapping:
 		return directionMapping[keys]
-	return "north"
+	return None
 
 def displacementFromDirection(direction):
 	return directions[direction]

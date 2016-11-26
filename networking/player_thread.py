@@ -12,8 +12,9 @@ class PlayerThread:
 		self.queue = []
 		self.listenerThread = Thread(target=self.listen)
 		self.workerThread = Thread(target=self.process)
-
 		self.sendLock = False
+		self.projectiles = []
+		self.projectilesReady = False
 
 	def start(self):
 		self.listenerThread.start()
@@ -42,17 +43,34 @@ class PlayerThread:
 				data = self.queue.pop(0)
 				if data["msg"] == "key pressed":
 						keysPressed = data["keyPressed"]
-						direction = locationMapper.toLongDirection(keysPressed)
-						displacement = locationMapper.displacementFromDirection(direction)
-						self.player.move(displacement[0],displacement[1])
-						self.player.setDirection(direction)
-						msg = {"msg" : "kpACK"}
-						while self.sendLock:
-							continue
-						self.sendLock = True
-						self.socket.sendall(json.dumps(msg))
-						time.sleep(.005)
-						self.sendLock = False
+						if "x" in keysPressed:
+							projectile = self.player.attack()
+							self.projectiles.append(projectile)
+							self.projectilesReady = True
+							keysPressed = keysPressed.replace("x","")
+							print "Projectile appended"
+						print "keysPressed: " + str(keysPressed)
+						keysPressed = keysPressed[0:2] #error handling. Possible for user to spam 3 keys at same time
+						if keysPressed == "":
+							msg = {"msg" : "kpACK"}
+							while self.sendLock:
+								continue
+							self.sendLock = True
+							self.socket.sendall(json.dumps(msg))
+							time.sleep(.008)
+							self.sendLock = False
+						else:
+							direction = locationMapper.toLongDirection(keysPressed)
+							displacement = locationMapper.displacementFromDirection(direction)
+							self.player.move(displacement[0],displacement[1])
+							self.player.setDirection(direction)
+							msg = {"msg" : "kpACK"}
+							while self.sendLock:
+								continue
+							self.sendLock = True
+							self.socket.sendall(json.dumps(msg))
+							time.sleep(.008)
+							self.sendLock = False
 
 
 				elif data["msg"] == "mapACK":
@@ -71,4 +89,12 @@ class PlayerThread:
 			self.mapACK = False
 			return True
 		return False
+
+	def getProjectiles(self):
+		if self.projectilesReady:
+			toRet = self.projectiles
+			self.projectiles = []
+			self.projectilesReady = False
+			return toRet
+		return []
 
