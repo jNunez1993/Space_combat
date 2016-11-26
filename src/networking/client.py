@@ -35,6 +35,7 @@ class Client:
 	def listen(self):
 		while True:
 			data = self.socket.recv(1024)
+			print data
 			data = json.loads(data)
 			self.queue.append(data)
 
@@ -45,7 +46,7 @@ class Client:
 				if data["msg"] == "map data":
 					self.mapReady = True
 					self.mapData = data["map"]
-					self.socket.sendall({"msg" : "mapACK"}
+					self.socket.sendall(json.dumps({"msg" : "mapACK"}))
 				elif data["msg"] == "kpACK":
 					while self.keyPressLock:
 						continue
