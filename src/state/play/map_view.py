@@ -11,6 +11,7 @@ class MapView:
 
 		self.gameMap = None
 		self.players = []
+		self.projectiles = []
 
 
 
@@ -22,6 +23,12 @@ class MapView:
 
 			#eventually need x,y to be bounds in a rectangle
 			self.window.blit(img,(x,y))
+
+		for projectile in self.projectiles:
+			x = projectile["location"]["x"]
+			y = projectile["location"]["y"]
+
+			pygame.draw.circle(self.window,(255,255,255),(x,y),10)
 
 		pygame.display.flip()
 
@@ -41,4 +48,4 @@ class MapView:
 	def setMap(self,gameMap):
 		self.gameMap = gameMap
 		self.players = self.gameMap['players']
-		#self.projectiles = self.gameMap['projectiles']
+		self.projectiles = self.gameMap['projectiles']

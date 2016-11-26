@@ -2,6 +2,7 @@ import socket
 import json
 import config
 from threading import Thread
+import time
 
 class Client:
 	def __init__(self):
@@ -13,6 +14,7 @@ class Client:
 		self.mapData = None
 		self.keypressACK = True
 		self.keyPressLock = False
+		self.sendLock = False
 
 	def connect(self):
 		try:
@@ -35,7 +37,6 @@ class Client:
 	def listen(self):
 		while True:
 			data = self.socket.recv(1024)
-			print data
 			data = json.loads(data)
 			self.queue.append(data)
 
@@ -46,7 +47,12 @@ class Client:
 				if data["msg"] == "map data":
 					self.mapReady = True
 					self.mapData = data["map"]
+					while self.sendLock:
+						continue
+					self.sendLock = True
 					self.socket.sendall(json.dumps({"msg" : "mapACK"}))
+					time.sleep(.008)
+					self.sendLock = False
 				elif data["msg"] == "kpACK":
 					while self.keyPressLock:
 						continue
@@ -60,7 +66,12 @@ class Client:
 		if self.keypressACK and self.keyPressLock == False:
 			self.keyPressLock = True
 			data = {"keyPressed" : key , "msg" : "key pressed"}
+			while self.sendLock:
+						continue
+			self.sendLock = True
 			self.socket.sendall(json.dumps(data))
+			time.sleep(.008)
+			self.sendLock = False
 			self.keypressACK = False
 			self.keyPressLock = False
 
