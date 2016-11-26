@@ -10,6 +10,10 @@ class Projectile(Serializable):
 		self.direction = direction
 		self.id = id_
 		self.speed = 8
+		self.hasCollided = False
+
+	def getId(self):
+		return self.id
 
 	def getLocation(self):
 		return self.location
@@ -28,6 +32,12 @@ class Projectile(Serializable):
 
 	def getDirection(self):
 		return self.direction
+
+	def getCollided(self):
+		return self.hasCollided 
+
+	def setCollided(self,val):
+		self.hasCollided = True
 
 	def serialize(self):
 		serialized = {

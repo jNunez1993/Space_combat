@@ -7,6 +7,7 @@ class MapBroadcaster:
 		self.gameMap = gameMap
 		self.playerThreads = playerThreads
 		self.mapManager = MapManager(self.gameMap)
+		self.mapManager.startCollisionHandling()
 		self.broadcast()
 
 

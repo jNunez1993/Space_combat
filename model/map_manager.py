@@ -1,9 +1,13 @@
 from threading import Thread
+from collision_manager import CollisionManager
 import time
 
 class MapManager:
 	def __init__(self,gameMap):
 		self.gameMap = gameMap
+		self.collisionManager = CollisionManager()
+		self.collisionManager.setPlayers(self.gameMap.getPlayers())
+		self.collisionManager.setProjectiles(self.gameMap.getProjectiles())
 
 	def handleProjectiles(self,projectiles):
 		for projectile in projectiles:
@@ -22,6 +26,10 @@ class MapManager:
 				toKeep.append(projectile)
 
 		self.gameMap.setProjectiles(toKeep)
+		self.collisionManager.setProjectiles(toKeep)
+
+	def startCollisionHandling(self):
+		Thread(target=self.collisionManager.run).start()
 
 
 	def executeProjectile(self,projectile):
