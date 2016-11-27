@@ -26,11 +26,12 @@ class MapView:
 		img = None
 		for player in self.players:
 			img = self.getPlayerRepresentation(player)
+			rect = img.get_rect()
 			x = player["location"]["x"]
 			y = player["location"]["y"]
-
-			#eventually need x,y to be bounds in a rectangle
-			self.window.blit(img,(x,y))
+			rect.left = x
+			rect.top = y
+			self.window.blit(img,rect)
 
 		for projectile in self.projectiles:
 			x = projectile["location"]["x"]
@@ -67,7 +68,7 @@ class MapView:
 			self.lastStarry = img
 			return img
 		currTime = time.time()
-		if currTime - self.lastStarryTime > .15:
+		if currTime - self.lastStarryTime > .35:
 			img = pygame.image.load("../img/starry" + str(self.starry) + ".jpg")
 			self.starry = self.starry%3 + 1
 			self.lastStarry = img

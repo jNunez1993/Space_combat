@@ -18,7 +18,8 @@ class LifeView:
 		for player in self.players:
 			lifebarPos = self.lifebarPositions[int(player["id"])]
 			hp = player["hp"]
-			lifeLeftRect = pygame.Rect(lifebarPos,(hp,self.lifebarHeight))
+			if hp != 0:
+				lifeLeftRect = pygame.Rect(lifebarPos,(hp,self.lifebarHeight))
 			if hp != 100:
 				emptyLife = pygame.Rect((lifebarPos[0]+hp,lifebarPos[1]),(100-hp,self.lifebarHeight))
 				pygame.draw.rect(self.window,(255,0,0),emptyLife)
