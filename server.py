@@ -2,7 +2,7 @@ import json
 import socket
 import config
 from networking import PlayerThread
-from networking import MapBroadcaster
+from networking import Broadcaster
 from factory import PlayerFactory
 from factory import MapFactory
 import time
@@ -44,7 +44,7 @@ class Server:
 
 		for thread in self.playerThreads:
 			thread.start()
-		self.mapBroadcaster = MapBroadcaster(gameMap,self.playerThreads)
+		self.mapBroadcaster = Broadcaster(gameMap,self.playerThreads)
 
 
 	def allPlayersConnected(self):

@@ -17,8 +17,8 @@ players = PlayerFactory.construct()
 
 # print gameMap.getPlayers()
 
-
-server = Server()
-server.start()
+while True:
+	server = Server()
+	server.start()
 
 

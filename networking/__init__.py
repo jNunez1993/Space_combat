@@ -1,2 +1,2 @@
 from player_thread import PlayerThread
-from map_broadcaster import MapBroadcaster
+from broadcaster import Broadcaster

@@ -15,10 +15,16 @@ class PlayerThread:
 		self.sendLock = False
 		self.projectiles = []
 		self.projectilesReady = False
+		self.listenerThreadStop = False 
+		self.workerThreadStop = False
 
 	def start(self):
 		self.listenerThread.start()
 		self.workerThread.start()
+
+	def stop(self):
+		self.listenerThreadStop = True
+		self.workerThreadStop = True
 
 
 	def getPlayer(self):
@@ -35,6 +41,8 @@ class PlayerThread:
 			data = self.socket.recv(1024)
 			data = json.loads(data)
 			self.queue.append(data)
+			if self.listenerThreadStop:
+				break
 
 
 	def process(self):
@@ -75,6 +83,8 @@ class PlayerThread:
 
 				elif data["msg"] == "mapACK":
 					self.mapACK = True
+			if self.workerThreadStop:
+				break
 
 
 	def getSendLock(self):
@@ -97,4 +107,11 @@ class PlayerThread:
 			self.projectilesReady = False
 			return toRet
 		return []
+
+	def isPlayerDead(self):
+		return self.getPlayer().getHp() == 0
+
+	def getId(self):
+		return self.getPlayer().getId()
+
 
