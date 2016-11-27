@@ -12,4 +12,7 @@ class StateMachine:
 
 	def peek(self):
 		return self.states[-1]
+
+	def size(self):
+		return len(self.states)
 	

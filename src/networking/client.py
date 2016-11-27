@@ -15,6 +15,8 @@ class Client:
 		self.keypressACK = True
 		self.keyPressLock = False
 		self.sendLock = False
+		self.gameOver = False
+		self.won = 0
 
 	def connect(self):
 		try:
@@ -60,6 +62,13 @@ class Client:
 					self.keypressACK = True
 					self.keyPressLock = False
 
+				elif data["msg"] == "game over":
+					self.gameOver = True
+					if data["won"] == 1:
+						self.won = 1
+
+
+
 
 	def sendKeyPressed(self,key):
 		print "Sending key " + str(key)
@@ -81,6 +90,9 @@ class Client:
 	def getMapData(self):
 		self.mapReady = False
 		return self.mapData
+
+	def isGameOver(self):
+		return (self.gameOver,self.won)
 
 
 

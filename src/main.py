@@ -15,8 +15,11 @@ def main():
 	stateMachine.push(HomeState(stateMachine))
 	
 	while True:
-		currentState = stateMachine.peek()
-		currentState.update()
+		if stateMachine.size() > 0:
+			currentState = stateMachine.peek()
+			currentState.update()
+		else:
+			stateMachine.push(HomeState(stateMachine))
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
