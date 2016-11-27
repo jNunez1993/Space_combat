@@ -7,7 +7,7 @@ PLAYERS = [
 		"hp" : 100,
 		"location" : {
 			"x" : 20,
-			"y" : 20,
+			"y" : 120,
 		},
 		"direction" : "east"
 	},

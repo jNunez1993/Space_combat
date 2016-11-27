@@ -15,7 +15,6 @@ class CollisionManager:
 					if projectile.getId() != playerId:
 						if not projectile.getCollided() and self.hasCollided(projectile,player):
 							projectile.setCollided(True)
-							print "COLLIDED"
 							hp = player.getHp()
 							player.setHp(hp-10)
 
@@ -39,14 +38,13 @@ class CollisionManager:
 		pX = player.getLocation().getX()
 		pY = player.getLocation().getY()
 
+		pXspan = (pX-self.playerSize/2,pX+self.playerSize/2)
+		pYspan = (pY-self.playerSize/2,pY+self.playerSize/2)
 
-		pXspan = (pX,pX+self.playerSize)
-		pYspan = (pY,pY+self.playerSize)
-
-		if projXspan[0] > pXspan[0] and projXspan[0] > pXspan[1]:
+		if (projXspan[0] > pXspan[0] and projXspan[0] > pXspan[1]) or (projYspan[0] > pYspan[0] and projYspan[0] > pYspan[1]):
 			return False
 
-		if projXspan[0] < pXspan[0] and projXspan[1] < pXspan[0]:
+		if (projXspan[0] < pXspan[0] and projXspan[1] < pXspan[0]) or (projYspan[0] < pYspan[0] and projYspan[1] < pYspan[0]):
 			return False
 
 		return True

@@ -47,6 +47,9 @@ class Player(Serializable):
 		return self.hp
 
 	def setHp(self,hp):
+		if hp < 0:
+			self.hp = 0
+			return
 		self.hp = hp
 
 	def serialize(self):
